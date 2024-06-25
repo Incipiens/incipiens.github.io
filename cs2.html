@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tutorial Post Template</title>
+    <!-- Google Material Design CSS -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+        }
+        .container {
+            margin-top: 50px;
+        }
+        .post-header {
+            margin-bottom: 30px;
+        }
+        .post-title {
+            font-size: 2.5rem;
+            font-weight: 500;
+        }
+        .post-subtitle {
+            font-size: 1.5rem;
+            color: #757575;
+        }
+        .post-content {
+            margin-top: 40px;
+        }
+        .post-section {
+            margin-bottom: 40px;
+        }
+        .post-section-title {
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+        .post-section-content {
+            font-size: 1.2rem;
+            line-height: 1.6;
+        }
+        .code-block {
+            background-color: #f5f5f5;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+        .code-block code {
+            font-family: 'Courier New', Courier, monospace;
+        }
+        .custom-nav-color {
+            background-color: #2196f3;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-wrapper custom-nav-color">
+            <ul id="nav-mobile" class="right hide-on-med-and-down">
+                <li><a href="https://www.adamconway.ie/">Home</a></li>
+                <li><a href="https://www.adamconway.ie/#contact">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+        <!-- Post Header -->
+        <div class="post-header">
+            <h1 class="post-title">Hosting Counter-Strike 2 at LAN</h1>
+            <h2 class="post-subtitle">How to get started, a quick checklist, and must-know commands</h2>
+            <p>Adam Conway - June 25th, 2024</p>
+
+            <p><i>This is a living document that will be updated over time as changes to Counter-Strike 2 come out. I will also update this with my own personal experiences and issues that I have come across running tournaments, in order to help those who may run into the same problems.</i></p>
+        </div>
+
+        <!-- Post Content -->
+        <div class="post-content">
+            <div class="post-section">
+                <h3 class="post-section-title">Getting started</h3>
+                <p class="post-section-content">If you're looking to host a Counter-Strike 2 LAN, there are a few things you'll need to familiarize yourself with first.</p>
+                
+                <ul>
+                    <li>Get up to speed with <a href="https://developer.valvesoftware.com/wiki/Counter-Strike_2/Dedicated_Servers">Valve's CS2 documentation</a></li>
+                    <li>Understand the network conditions that your event will be operating under</li>
+                    <li><ul>
+                        <li>Check for firewalls, DDoS protection, and any potential routing or subnet problems</li>
+                    </ul></li>
+                    <li>Get up to speed with <a href="https://totalcsgo.com/commands">important CS2 commands</a> (more on this later)</li>
+                </ul>
+
+                <p>Next, you'll need to install and setup SteamCMD. These instructions will depend on your operating system, so <a href="https://developer.valvesoftware.com/wiki/SteamCMD">refer to Valve's guidance on how to install and login with it</a>.</p>
+
+                <p>Once SteamCMD is setup, you'll need to configure and download CS2. You can do that with the following command after logging in to SteamCMD.</p>
+                <div class="code-block">
+                    <code>
+                        app_update 730
+                    </code>
+                </div>
+
+                <p>Now, you can launch your basic server. Open a command prompt or terminal in the CS2 folder, and the following commands will launch the server. You will need to be in the CS2 install folder for these commands to work.</p>
+
+                <div class="code-block">
+                    <code>
+                        cd game/bin/win64/
+                    </code>
+                </div>
+
+                <div class="code-block">
+                    <code>
+                        .\cs2.exe -dedicated -usercon +game_type 0 +game_mode 1 +map de_inferno +exec server.cfg
+                    </code>
+                </div>
+
+                <p>To keep your CS2 server updated, you can launch SteamCMD and run the same app_update command again. If required, you can login with your Steam username again, and it should not prompt you for your password.</p>
+
+                <p>At this stage, your server works in a basic sense. You can connect to it, you can run it, and players can play on it together. However, we'll need to make a number of modifications to make it suitable for a competitive LAN environemnt.</p>
+            </div>
+            <div class="post-section">
+                <h3 class="post-section-title">Configuring your server</h3>
+                <p class="post-section-content">Ports, configs, and other things</p>
+                <p>As it stands, your server is in a playable state, but it won't work for competitive play. This is because there are a number of things that we still need to change.</p>
+
+                <p>You'll first need to navigate to your server.cfg. This is located in game/cfg/, and you can modify it with Notepad, Vim, Nano, or whatever your favourite text editor is. Add the following commands, separating them line by line in the config:</p>
+                <div class="code-block">
+                    <code>
+                        mp_overtime_enable 1
+                    </code>
+                </div>
+
+                <div class="code-block">
+                    <code>
+                        sv_lan 1 // Not always required, but worth enabling if you run into networking issues
+                    </code>
+                </div>
+
+                <div class="code-block">
+                    <code>
+                        cash_team_bonus_shorthanded 0 // This is not needed as such and can be removed. However, CS2 has an issue currently where sometimes players receive short handed income when they shouldn't on custom servers.
+                    </code>
+                </div>
+
+                <div class="code-block">
+                    <code>
+                        mp_limitteams 0
+                    </code>
+                </div>
+
+                <div class="code-block">
+                    <code>
+                        mp_autokick 0
+                    </code>
+                </div>
+
+                <div class="code-block">
+                    <code>
+                        spec_autodirector 1 // Required for autodirector if you want to have it streamed without an observer
+                    </code>
+                </div>
+
+                <div class="code-block">
+                    <code>
+                        tv_enable 1
+                    </code>
+                </div>
+
+                <div class="code-block">
+                    <code>
+                        tv_record 27017 // This is personal preference. Make sure this port does not cause a conflict. More on port conflicts later.
+                    </code>
+                </div>
+
+                <div class="code-block">
+                    <code>
+                        sv_hibernate_when_empty 0 // Good for diagnosing problems, as you can connect to the GOTV even when no players are connected
+                    </code>
+                </div>
+
+                <p>Already, your server is almost good to go for competitive play. If you are not playing at LAN, remove sv_lan 1. Otherwise, you can actually use your server now to play competitively.</p>
+
+                <p>The last thing you'll need to do is enable round backups with a prefix, especially if you're running two servers from the one install. To do this, in the server console before the game starts, run the following command:</p>
+
+                <div class="code-block">
+                    <code>
+                        mp_backup_round_file team1vsteam2
+                    </code>
+                </div>
+
+                <p>You can modify the name, just make it so that the two games are using distinct prefixes. Otherwise, you can leave this default.</p>
+
+                <p>If you want to restore a backup, ask the players what round they need the backup restored to. Then you can restore the backup with the following command:</p>
+
+                <div class="code-block">
+                    <code>
+                        mp_backup_restore_load_file filename
+                    </code>
+                </div>
+
+                <p>If you'd like to see your round files, you can run the following command (making sure to specify the prefix that you used previously) to get the exact name, which sorts them most recent to oldest:</p>
+
+                <div class="code-block">
+                    <code>
+                        mp_backup_restore_list_files team1vsteam2
+                    </code>
+                </div>
+
+                <p>Finally, if you want to record demos, you can use the following command:</p>
+
+                <div class="code-block">
+                    <code>
+                        tv_record gamename
+                    </code>
+                </div>
+
+                <p>These demos can be used to rewatch the game after, and can also be used to calculate player statistics with tools like <a href="https://cs-demo-manager.com/">CS Demo Manager</a></p>
+            </div>
+            <!-- Add more sections as needed -->
+
+            <div class="post-content">
+                <div class="post-section">
+                    <h3 class="post-section-title">Troubleshooting</h3>
+                    <p class="post-section-content">Common problems you can come across.</p>
+
+                    <p>There are a few problems that can come up as you host games, and these are some of the most common.</p>
+
+                    <p class="post-section-content">Port conflicts</p>
+                    <p>If you're running multiple servers on the same machine, make sure to add '-port xxxxx' to your launch commands. Counter-Strike 2 automatically starts on port 27015 (think of ports as data highways for the internet), and you can't have two services running on the same port. Separate your servers by a few numbers, don't just increase your second server to 27016, for example. I would do it in increments of five, so port 27015 for server one, 27020 for server two, 27025 for server three etc.</p>
+
+                    <p>On that note, if you can, running servers on separate machines is usually preferable. It's not required, but it can avoid potential port conflicts and other weirdness.</p>
+
+                    <p class="post-section-content">Players banned from servers</p>
+
+                    <p>If a player gets votekicked by their teammates at LAN, this can cause a headache. You can try to use the 'removeid' command to remove their Steam ID from the banlist, but this hasn't worked for me. The best way that I've found is to simply restart the server when this happens, and tell the players to not do it again. mp_autokick 0 in the server.cfg will prevent team-damage bans. You only need to worry about players votekicking, which they shouldn't do anyway. You can also restore a backup if they do it mid-round, as the backups won't carry the banlist forward.</p>
+
+                    <p class="post-section-content">Firewalls</p>
+                    <p>Ensure that firewalls are off. If they are on, they can sometimes block CS2 traffic as it uses non-standard ports to send traffic that, to a firewall, may look suspicious. You're best off keeping them disabled for the duration of the event, and instead enable a firewall encapsulating the entire network instead. Internal firewalls can be troublesome to deal with.</p>
+                
+                
+                </div>
+            </div>    
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="page-footer custom-nav-color">
+        <div class="container">
+            <div class="row">
+                <div class="col l6 s12">
+                    <h5 class="white-text">Incipiens Consulting Ltd.</h5>
+                    <p class="grey-text text-lighten-4">Incipiens Consulting Ltd. is an Irish consulting company that can help you run your gaming event or can offer advice and services on event production, player management, and more.</p>
+                </div>
+                <div class="col l4 offset-l2 s12">
+                    <h5 class="white-text">Links</h5>
+                    <ul>
+                        <li><a class="grey-text text-lighten-3" href="https://www.linkedin.com/in/adam-c-95265584/">LinkedIn</a></li>
+                        <li><a class="grey-text text-lighten-3" href="https://twitter.com/adamconwayie">Twitter</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Google Material Design JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+</body>
+</html>
