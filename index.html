@@ -51,8 +51,11 @@
 
   .chip { font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: #8b949e; border: 1px solid #30363d; border-radius: 999px; padding: 6px 12px; }
 
+  .tgrid > * { min-width: 0; }
+  .project-row .mono, .more-row .mono { overflow-wrap: anywhere; }
+
   @media (max-width: 760px) {
-    .tgrid { grid-template-columns: 1fr !important; gap: 32px !important; padding-left: 22px !important; padding-right: 22px !important; padding-top: 64px !important; }
+    .tgrid { grid-template-columns: minmax(0, 1fr) !important; gap: 32px !important; padding-left: 22px !important; padding-right: 22px !important; padding-top: 64px !important; }
     .tsidebar { position: static !important; }
     .tform-fields { grid-template-columns: 1fr !important; }
     .tservices { grid-template-columns: 1fr !important; }
