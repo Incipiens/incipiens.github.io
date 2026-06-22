@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Photography · Adam Conway</title>
+<meta name="description" content="Counter-Strike 2 event photography by Adam Conway, from IEM, Starladder, PGL and more." />
+<meta name="author" content="Adam Conway" />
+<link rel="canonical" href="https://adamconway.ie/photography.html" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="Photography · Adam Conway" />
+<meta property="og:description" content="Counter-Strike 2 event photography by Adam Conway." />
+<meta property="og:url" content="https://adamconway.ie/photography.html" />
+<meta property="og:image" content="https://adamconway.ie/images/AdamConwayNew.jpg" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:creator" content="@AdamConwayIE" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2032%2032'%3E%3Crect%20width='32'%20height='32'%20rx='7'%20fill='%230d1117'/%3E%3Ctext%20x='16'%20y='23'%20font-family='monospace'%20font-weight='700'%20font-size='20'%20fill='%23247bff'%20text-anchor='middle'%3EA%3C/text%3E%3C/svg%3E" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  :root { --accent: #247bff; }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body { background: #0d1117; color: #c9d1d9; min-height: 100vh; -webkit-font-smoothing: antialiased; font-family: 'IBM Plex Sans', system-ui, sans-serif; }
+  a { -webkit-tap-highlight-color: transparent; }
+  ::selection { background: rgba(36,123,255,0.28); }
+
+  .mono { font-family: 'IBM Plex Mono', monospace; }
+  .section-label { font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: var(--accent); }
+
+  .back-link { font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: #8b949e; text-decoration: none; transition: color .15s; }
+  .back-link:hover { color: var(--accent); }
+
+  .tabs { display: flex; flex-wrap: wrap; gap: 9px; margin-top: 24px; }
+  .tab { font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: #8b949e; background: #161b22; border: 1px solid #30363d; border-radius: 999px; padding: 8px 15px; cursor: pointer; transition: color .15s, border-color .15s, background .15s; }
+  .tab:hover { color: #c9d1d9; border-color: #484f58; }
+  .tab[aria-selected="true"] { color: #fff; background: var(--accent); border-color: var(--accent); }
+  .tab .count { color: inherit; opacity: 0.7; margin-left: 6px; font-size: 11px; }
+
+  .daytabs { margin-top: 18px; gap: 7px; }
+  .daytabs .tab { font-size: 12px; padding: 6px 13px; }
+
+  .event-meta { margin-top: 30px; }
+  .event-title { font-size: 22px; font-weight: 600; color: #f0f6fc; letter-spacing: -0.01em; margin: 0; }
+  .event-sub { font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: var(--accent); margin: 8px 0 0; }
+  .event-blurb { font-size: 15px; line-height: 1.6; color: #8b949e; margin: 12px 0 0; max-width: 640px; }
+
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 10px; margin-top: 26px; }
+  .tile { position: relative; display: block; padding: 0; border: 1px solid #30363d; border-radius: 8px; overflow: hidden; background: #161b22; cursor: pointer; aspect-ratio: 3 / 2; }
+  .tile img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .35s ease, opacity .3s; opacity: 0; }
+  .tile img.loaded { opacity: 1; }
+  .tile:hover img { transform: scale(1.05); }
+  .tile:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+  .empty { font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: #6e7681; margin-top: 26px; padding: 20px; border: 1px dashed #30363d; border-radius: 8px; }
+
+  .lb { position: fixed; inset: 0; z-index: 100; display: none; align-items: center; justify-content: center; background: rgba(1,4,9,0.92); backdrop-filter: blur(4px); }
+  .lb.open { display: flex; }
+  .lb-stage { position: relative; max-width: 92vw; max-height: 82vh; display: flex; align-items: center; justify-content: center; }
+  .lb-stage img { max-width: 92vw; max-height: 82vh; border-radius: 8px; border: 1px solid #30363d; display: block; }
+  .lb-spinner { position: absolute; width: 32px; height: 32px; border: 3px solid #30363d; border-top-color: var(--accent); border-radius: 50%; animation: spin .8s linear infinite; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .lb-bar { position: fixed; left: 0; right: 0; bottom: 0; display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 16px 22px; background: linear-gradient(to top, rgba(1,4,9,0.85), transparent); }
+  .lb-caption { font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: #8b949e; }
+  .lb-download { font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: #c9d1d9; text-decoration: none; border: 1px solid #30363d; border-radius: 7px; padding: 9px 14px; background: rgba(13,17,23,0.6); transition: border-color .15s, color .15s; white-space: nowrap; }
+  .lb-download:hover { border-color: var(--accent); color: var(--accent); }
+  .lb-btn { position: fixed; top: 50%; transform: translateY(-50%); width: 46px; height: 46px; border-radius: 50%; border: 1px solid #30363d; background: rgba(13,17,23,0.7); color: #c9d1d9; font-size: 20px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: border-color .15s, color .15s; }
+  .lb-btn:hover { border-color: var(--accent); color: var(--accent); }
+  .lb-prev { left: 18px; }
+  .lb-next { right: 18px; }
+  .lb-close { position: fixed; top: 18px; right: 18px; width: 42px; height: 42px; border-radius: 50%; border: 1px solid #30363d; background: rgba(13,17,23,0.7); color: #c9d1d9; font-size: 20px; cursor: pointer; transition: border-color .15s, color .15s; }
+  .lb-close:hover { border-color: var(--accent); color: var(--accent); }
+
+  @media (max-width: 700px) {
+    .lb-btn { width: 40px; height: 40px; }
+    .lb-prev { left: 8px; }
+    .lb-next { right: 8px; }
+    .lb-caption { display: none; }
+  }
+</style>
+</head>
+<body>
+  <div style="max-width: 1080px; margin: 0 auto; padding: 56px 32px 90px;">
+
+    <a class="back-link" href="index.html">← adamconway.ie</a>
+
+    <div class="section-label" style="margin-top: 28px;">// photography</div>
+    <h1 style="font-size: 27px; font-weight: 600; color: #f0f6fc; letter-spacing: -0.01em; margin: 12px 0 0;">Esports &amp; live events</h1>
+    <p style="font-size: 16px; line-height: 1.7; color: #c9d1d9; margin: 12px 0 0; max-width: 640px;">Photography from Counter-Strike 2 events. Pick an event below.</p>
+
+    <div class="tabs" id="tabs" role="tablist" aria-label="Choose an event"></div>
+
+    <div class="event-meta" id="eventMeta"></div>
+    <div class="tabs daytabs" id="dayTabs" role="tablist" aria-label="Choose a day"></div>
+    <div class="grid" id="grid"></div>
+
+  </div>
+
+  <div class="lb" id="lb" role="dialog" aria-modal="true" aria-label="Photo viewer">
+    <button class="lb-close" id="lbClose" aria-label="Close">✕</button>
+    <button class="lb-btn lb-prev" id="lbPrev" aria-label="Previous photo">‹</button>
+    <button class="lb-btn lb-next" id="lbNext" aria-label="Next photo">›</button>
+    <div class="lb-stage">
+      <div class="lb-spinner" id="lbSpinner"></div>
+      <img id="lbImg" alt="" />
+    </div>
+    <div class="lb-bar">
+      <span class="lb-caption mono" id="lbCaption"></span>
+      <a class="lb-download" id="lbDownload" href="#" target="_blank" rel="noopener">Open full resolution ↓</a>
+    </div>
+  </div>
+
+  <script>
+  const R2_BASE = "https://photos.adamconway.ie";
+
+  const events = [
+    {
+      slug: "iem-cologne-2026",
+      name: "IEM Cologne 2026",
+      date: "2026",
+      location: "Cologne, Germany",
+      blurb: "IEM Cologne 2026, a Counter-Strike 2 major.",
+      days: [
+        { label: "Day 1", slug: "day-1", count: 18 },
+        { label: "Day 2", slug: "day-2", count: 24 },
+        { label: "Day 3", slug: "day-3", count: 26 },
+        { label: "Day 4", slug: "day-4", count: 23 }
+      ]
+    },
+  ];
+
+  const pad = n => String(n).padStart(4, "0");
+  const thumbUrl   = (ev, day, i) => `images/photography/${ev.slug}/${day.slug}/${pad(i)}.jpg`;
+  const displayUrl = (ev, day, i) => `${R2_BASE}/${ev.slug}/${day.slug}/display/${pad(i)}.jpg`;
+  const fullUrl    = (ev, day, i) => `${R2_BASE}/${ev.slug}/${day.slug}/full/${pad(i)}.jpg`;
+  const captionFor = (day, i) => (day._captions && day._captions[pad(i)]) || "";
+  const eventTotal = ev => ev.days.reduce((n, d) => n + (d.count || 0), 0);
+
+  function parseLenient(text) {
+    try { return JSON.parse(text); }
+    catch (e) {
+      try { return JSON.parse(text.replace(/,(\s*[}\]])/g, "$1")); }
+      catch (_) { return {}; }
+    }
+  }
+  function loadCaptions(ev, day) {
+    if (day._captions) return Promise.resolve(day._captions);
+    return fetch(`images/photography/${ev.slug}/${day.slug}/captions.json`)
+      .then(r => (r.ok ? r.text() : "{}"))
+      .then(t => parseLenient(t))
+      .catch(() => ({}))
+      .then(c => { day._captions = c || {}; return day._captions; });
+  }
+  function loadEventCaptions(ev) {
+    return Promise.all(ev.days.filter(d => d.count).map(d => loadCaptions(ev, d)));
+  }
+
+  const tabsEl = document.getElementById("tabs");
+  const dayTabsEl = document.getElementById("dayTabs");
+  const metaEl = document.getElementById("eventMeta");
+  const gridEl = document.getElementById("grid");
+
+  let currentEvent = null;
+  let currentDayKey = "all";
+  let view = [];
+
+  if (events.length > 1) {
+    events.forEach(ev => {
+      const b = document.createElement("button");
+      b.className = "tab";
+      b.setAttribute("role", "tab");
+      b.dataset.slug = ev.slug;
+      b.innerHTML = `${ev.name}<span class="count">${eventTotal(ev)}</span>`;
+      b.addEventListener("click", () => selectEvent(ev.slug, "all", true));
+      tabsEl.appendChild(b);
+    });
+  }
+
+  function selectEvent(slug, dayKey, pushHash) {
+    const ev = events.find(e => e.slug === slug) || events[0];
+    if (!ev) return;
+    currentEvent = ev;
+
+    [...tabsEl.children].forEach(t =>
+      t.setAttribute("aria-selected", t.dataset.slug === ev.slug ? "true" : "false")
+    );
+
+    const bits = [ev.date, ev.location].filter(Boolean).join(" · ");
+    metaEl.innerHTML =
+      `<h2 class="event-title">${ev.name}</h2>` +
+      (bits ? `<p class="event-sub">${bits}</p>` : "") +
+      (ev.blurb ? `<p class="event-blurb">${ev.blurb}</p>` : "");
+
+    renderDayTabs(ev);
+    const liveDays = ev.days.filter(d => d.count);
+    const wanted = liveDays.find(d => d.slug === dayKey);
+    selectDay(wanted ? wanted.slug : "all", pushHash);
+
+    loadEventCaptions(ev).then(() => { if (currentEvent === ev) applyCaptions(); });
+  }
+
+  function renderDayTabs(ev) {
+    dayTabsEl.innerHTML = "";
+    const liveDays = ev.days.filter(d => d.count);
+    if (liveDays.length <= 1) return;
+    const mk = (label, key, count) => {
+      const b = document.createElement("button");
+      b.className = "tab";
+      b.setAttribute("role", "tab");
+      b.dataset.key = key;
+      b.innerHTML = `${label}<span class="count">${count}</span>`;
+      b.addEventListener("click", () => selectDay(key, true));
+      dayTabsEl.appendChild(b);
+    };
+    mk("All days", "all", eventTotal(ev));
+    liveDays.forEach(d => mk(d.label, d.slug, d.count));
+  }
+
+  function selectDay(dayKey, pushHash) {
+    const ev = currentEvent;
+    currentDayKey = dayKey;
+
+    [...dayTabsEl.children].forEach(t =>
+      t.setAttribute("aria-selected", t.dataset.key === dayKey ? "true" : "false")
+    );
+
+    view = [];
+    const days = dayKey === "all" ? ev.days.filter(d => d.count)
+                                  : ev.days.filter(d => d.slug === dayKey);
+    days.forEach(day => { for (let i = 1; i <= day.count; i++) view.push({ day, i }); });
+
+    renderGrid();
+
+    if (pushHash) {
+      try {
+        history.replaceState(null, "", "#" + ev.slug + (dayKey === "all" ? "" : "/" + dayKey));
+      } catch (e) { location.hash = ev.slug + (dayKey === "all" ? "" : "/" + dayKey); }
+    }
+  }
+
+  function renderGrid() {
+    gridEl.innerHTML = "";
+    if (!view.length) {
+      gridEl.innerHTML = `<div class="empty">Photos from ${currentEvent.name} are coming soon.</div>`;
+      return;
+    }
+    view.forEach((p, idx) => {
+      const tile = document.createElement("button");
+      tile.className = "tile";
+      tile.setAttribute("aria-label", `Open photo ${idx + 1} of ${view.length}`);
+      const img = document.createElement("img");
+      img.loading = "lazy";
+      img.src = thumbUrl(currentEvent, p.day, p.i);
+      img.alt = `${currentEvent.name} — photo ${idx + 1}`;
+      img.addEventListener("load", () => img.classList.add("loaded"));
+      tile.appendChild(img);
+      tile.addEventListener("click", () => openLightbox(idx));
+      gridEl.appendChild(tile);
+    });
+    applyCaptions();
+  }
+
+  function applyCaptions() {
+    gridEl.querySelectorAll("img").forEach((img, idx) => {
+      const p = view[idx];
+      if (!p) return;
+      const cap = captionFor(p.day, p.i);
+      if (cap) img.alt = `${currentEvent.name} — ${cap}`;
+    });
+    if (lb.classList.contains("open")) showPhoto();
+  }
+
+  const lb = document.getElementById("lb");
+  const lbImg = document.getElementById("lbImg");
+  const lbCaption = document.getElementById("lbCaption");
+  const lbDownload = document.getElementById("lbDownload");
+  const lbSpinner = document.getElementById("lbSpinner");
+  let lbPos = 0;
+
+  function openLightbox(pos) {
+    lbPos = pos;
+    showPhoto();
+    lb.classList.add("open");
+    document.body.style.overflow = "hidden";
+  }
+  function closeLightbox() {
+    lb.classList.remove("open");
+    document.body.style.overflow = "";
+    lbImg.src = "";
+  }
+  function showPhoto() {
+    const p = view[lbPos];
+    if (!p) return;
+    const ev = currentEvent, day = p.day;
+    lbSpinner.style.display = "block";
+    lbImg.style.opacity = "0";
+    const cap = captionFor(day, p.i);
+    const multiDay = currentDayKey === "all" && ev.days.filter(d => d.count).length > 1;
+    const label = [multiDay ? day.label : "", cap].filter(Boolean).join(" · ");
+    lbImg.alt = cap ? `${ev.name} — ${cap}` : `${ev.name} — photo ${lbPos + 1}`;
+    lbCaption.textContent = (label ? label + " · " : ev.name + " · ") + `${lbPos + 1} / ${view.length}`;
+    lbDownload.href = fullUrl(ev, day, p.i);
+
+    const tmp = new Image();
+    tmp.onload = () => {
+      lbImg.src = tmp.src;
+      lbImg.style.opacity = "1";
+      lbSpinner.style.display = "none";
+    };
+    tmp.onerror = () => {
+      lbImg.src = thumbUrl(ev, day, p.i);
+      lbImg.style.opacity = "1";
+      lbSpinner.style.display = "none";
+    };
+    tmp.src = displayUrl(ev, day, p.i);
+  }
+  function step(d) {
+    if (!view.length) return;
+    lbPos = (lbPos + d + view.length) % view.length;
+    showPhoto();
+  }
+
+  document.getElementById("lbClose").addEventListener("click", closeLightbox);
+  document.getElementById("lbPrev").addEventListener("click", () => step(-1));
+  document.getElementById("lbNext").addEventListener("click", () => step(1));
+  lb.addEventListener("click", e => { if (e.target === lb) closeLightbox(); });
+  document.addEventListener("keydown", e => {
+    if (!lb.classList.contains("open")) return;
+    if (e.key === "Escape") closeLightbox();
+    else if (e.key === "ArrowLeft") step(-1);
+    else if (e.key === "ArrowRight") step(1);
+  });
+
+  function applyHash() {
+    const [he, hd] = location.hash.slice(1).split("/");
+    const ev = events.find(e => e.slug === he) || events[0];
+    if (ev) selectEvent(ev.slug, hd || "all", false);
+  }
+  applyHash();
+  window.addEventListener("hashchange", () => { if (!lb.classList.contains("open")) applyHash(); });
+  </script>
+</body>
+</html>
